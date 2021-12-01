@@ -1,0 +1,5 @@
+{
+    "user": "db-user",
+    "password": "db-password",
+    "port": "3306"
+}
