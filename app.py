@@ -13,11 +13,24 @@ def index():
 def users():
     if (request.method == 'GET'):
         sql = maria()
-        user = request.args.get('user')
+        user = request.args.get("user")
+        event = request.args.get("event")
 
-        if request.args.get('users') == "all":
+        if user == "all":
             users = sql.get_allusers()
-            return json.dumps({"users": users})            
+            return json.dumps({"users": users})
+
+        elif user:
+            user = sql.get_user(user)
+            return json.dumps(user)
+
+        elif event == "all":
+            info = sql.get_allevents()
+            return json.dumps({"events": info})
+
+        elif event:
+            info = sql.get_event(event)
+            return json.dumps(info)
 
     return '😐 OOPS 😐'
 

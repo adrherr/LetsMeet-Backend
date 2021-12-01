@@ -1,4 +1,12 @@
--- Inital Database for Let's Meet
+-- Initial Database for Let's Meet
+
+--
+-- Create new database `meet`
+--
+
+DROP DATABASE IF EXISTS `meet`;
+CREATE DATABASE `meet`;
+USE `meet`;
 
 --
 -- Table structure for table `users`
@@ -40,8 +48,9 @@ CREATE TABLE `events` (
     `title` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
     `edate` date NOT NULL,
     `description` varchar(300) CHARACTER SET utf8mb4 NOT NULL,
-    `host` int(10) NOT NULL,
-    PRIMARY KEY (`eventid`)
+    `hostid` int(10) NOT NULL,
+    PRIMARY KEY (`eventid`),
+    FOREIGN KEY (`hostid`) REFERENCES `users` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -51,4 +60,32 @@ CREATE TABLE `events` (
 LOCK TABLES `events` WRITE;
 INSERT INTO `events` VALUES (1,'Music Concert','2020-03-17','Come join us for another big concert',7),
                             (2,'Camping','2020-06-22','Have fun at our annual comping trip!',8);
+UNLOCK TABLES;
+
+--
+-- Table structure for table `participants`
+--
+
+DROP TABLE IF EXISTS `participants`;
+
+CREATE TABLE `participants` (
+    `pid` int(10) NOT NULL AUTO_INCREMENT,
+    `eventid` int(10) NOT NULL,
+    `userid` int(10) NOT NULL,
+    PRIMARY KEY (`pid`),
+    FOREIGN KEY (`eventid`) REFERENCES `events` (`eventid`),
+    FOREIGN KEY (`userid`) REFERENCES `users` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `participants`
+--
+
+LOCK TABLES `participants` WRITE;
+INSERT INTO `participants` VALUES   (10,2,3),
+                                    (11,2,4),
+                                    (12,2,2),
+                                    (13,2,5),
+                                    (14,1,1),
+                                    (15,1,5);
 UNLOCK TABLES;
