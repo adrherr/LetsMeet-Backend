@@ -11,23 +11,32 @@ sudo apt install mariadb-server
 sudo apt install libmariadb3 libmariadb-dev
 ```
 
-1. Install dependencies
+1. Clone repo
+```git
+git clone https://github.com/adrherr/LetsMeet-Backend.git
+```
+or (for ssh)
+```git
+git clone git@github.com:adrherr/LetsMeet-Backend.git
+```
+
+2. Install dependencies
 ```py
 pip install -r requirements.txt
 ```
 
-2. Connect to MariaDB and run script
+3. Connect to MariaDB and run script
 ```mariadb
 source init.sql
 ```
 
-3. Fill out config in private.json
+4. Fill out config in private.json
 * Note: If you don't want to accidently push changes from this file
 ```git
 git update-index --assume-unchanged private.json
 ```
 
-4. Start website
+5. Start website
 ```py
 python3 app.py
 ```
