@@ -65,7 +65,7 @@ class maria:
             event = self.cursor.fetchone()
             host = self.get_user(event[3])
             participants = self.get_partipants(eventid)
-            return {"name":event[0],"date":event[1],"description":event[2],"host":host,"participants":participants}
+            return {"eventid":eventid,"name":event[0],"date":event[1],"description":event[2],"host":host,"participants":participants}
         except mariadb.Error as e:
             print(f"Error: {e}")
 
