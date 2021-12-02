@@ -21,22 +21,25 @@ git clone git@github.com:adrherr/LetsMeet-Backend.git
 ```
 
 2. Install dependencies
-```py
+```
 pip install -r requirements.txt
 ```
 
-3. Connect to MariaDB and run script
-```mariadb
-source init.sql
-```
+3. You need to have a MariaDB password setup
 
-4. Fill out config in private.json
+* Skip to step 3: [MariaDB Setup](https://www.digitalocean.com/community/tutorials/how-to-install-mariadb-on-ubuntu-20-04)
+
+4. Connect to MariaDB and run script
+
+MariaDB [(none)]> ```source init.sql```
+
+5. Fill out config in private.json
 * Note: If you don't want to accidently push changes from this file
 ```git
 git update-index --assume-unchanged private.json
 ```
 
-5. Start website
+6. Start website
 ```py
 python3 app.py
 ```
@@ -44,20 +47,20 @@ python3 app.py
 # Usage
 To get info about one event specifiy the eventid
 ```
-url/get?event=1
+/get?event=1
 ```
 
 To get info about all events
 ```
-url/get?event=all
+/get?event=all
 ```
 
 To get info about one user specify the userid
 ```
-url/get?user=4 
+/get?user=4 
 ```
 
 To get info about all users
 ```
-url/get?user=all
+/get?user=all
 ```
