@@ -3,16 +3,18 @@ from db import maria
 import json
 
 app = Flask(__name__, template_folder='website')
+sql = maria()
+
 
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('/index.html')
 
-@app.route('/get', methods = ['GET'])
+
+@app.route('/get', methods=['GET'])
 def users():
     if (request.method == 'GET'):
-        sql = maria()
         user = request.args.get("user")
         event = request.args.get("event")
 
@@ -33,6 +35,7 @@ def users():
             return json.dumps(info)
 
     return '😐 OOPS 😐'
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
