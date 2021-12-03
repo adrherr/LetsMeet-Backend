@@ -21,10 +21,13 @@ class maria:
     
     def get_allusers(self):
         try:
-            query = "SELECT name, email FROM users;"
+            query = "SELECT userid, name, email FROM users;"
             self.cursor.execute(query)
             users = self.cursor.fetchall()
-            return users
+            jsonUsers = []
+            for userid, name, email in users:
+                jsonUsers.append({"userid":userid,"name":name,"email":email})
+            return jsonUsers
         except mariadb.Error as e:
             print(f"Error: {e}")
 
@@ -53,7 +56,7 @@ class maria:
             for eventid, title, edate, description, hostid in events:
                 host = self.get_user(hostid)
                 participants = self.get_partipants(eventid)
-                jsonEvents.append({"eventid":eventid,"name":title,"date":edate,"host":host,"participants":participants})
+                jsonEvents.append({"eventid":eventid,"name":title,"date":edate,"description":description,"host":host,"participants":participants})
             return jsonEvents
         except mariadb.Error as e:
             print(f"Error: {e}")
