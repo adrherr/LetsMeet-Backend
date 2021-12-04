@@ -82,10 +82,10 @@ CREATE TABLE `participants` (
 --
 
 LOCK TABLES `participants` WRITE;
-INSERT INTO `participants` VALUES   (10,2,3),
-                                    (11,2,4),
-                                    (12,2,2),
-                                    (13,2,5),
-                                    (14,1,1),
-                                    (15,1,5);
+INSERT INTO `participants` VALUES   (1,2,3),
+                                    (2,2,4),
+                                    (3,2,2),
+                                    (4,2,5),
+                                    (5,1,1),
+                                    (6,1,5);
 UNLOCK TABLES;

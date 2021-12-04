@@ -13,13 +13,13 @@ def index():
 
 
 @app.route('/get', methods=['GET'])
-def users():
+def parse_get_request():
     if (request.method == 'GET'):
         user = request.args.get("user")
         event = request.args.get("event")
 
         if user == "all":
-            users = sql.get_allusers()
+            users = sql.get_all_users()
             return json.dumps({"users": users})
 
         elif user:
@@ -27,12 +27,32 @@ def users():
             return json.dumps(user)
 
         elif event == "all":
-            info = sql.get_allevents()
+            info = sql.get_all_events()
             return json.dumps({"events": info})
 
         elif event:
             info = sql.get_event(event)
             return json.dumps(info)
+
+    return '😐 OOPS 😐'
+
+
+@app.route('/post', methods=['POST'])
+def parse_post_request():
+    if (request.method == 'POST'):
+        post_type = request.args.get("type")
+
+        if post_type == 'user':
+            info = request.json
+            print(info)
+            sql.add_user(info)
+            return 'Success'
+
+        elif post_type == 'event':
+            info = request.json
+            print(info)
+            sql.add_event(info)
+            return 'Success'
 
     return '😐 OOPS 😐'
 
