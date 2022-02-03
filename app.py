@@ -22,13 +22,17 @@ def parse_get_request():
             users = sql.get_all_users()
             return json.dumps({"users": users})
 
-        elif user:
-            user = sql.get_user(user)
-            return json.dumps(user)
-
         elif event == "all":
             info = sql.get_all_events()
             return json.dumps({"events": info})
+
+        elif event == "userevents" and user:
+            info = sql.get_user_events(user)
+            return json.dumps({"events": info})
+
+        elif user:
+            user = sql.get_user(user)
+            return json.dumps(user)
 
         elif event:
             info = sql.get_event(event)
@@ -58,4 +62,5 @@ def parse_post_request():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port=5000)
+    sql.close()

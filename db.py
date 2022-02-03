@@ -45,11 +45,14 @@ class maria:
             print(f"Error: {e}")
 
     def get_partipants(self, event_id):
-        query = "SELECT userid FROM participants WHERE eventid=%s;"
-        self.cursor.execute(query, (event_id,))
-        participants = self.cursor.fetchall()
-        participants = [self.get_user(userid[0]) for userid in participants]
-        return participants
+        try:
+            query = "SELECT userid FROM participants WHERE eventid=%s;"
+            self.cursor.execute(query, (event_id,))
+            participants = self.cursor.fetchall()
+            participants = [self.get_user(userid[0]) for userid in participants]
+            return participants
+        except mariadb.Error as e:
+            print(f"Error: {e}")
 
     def get_all_events(self):
         try:
@@ -74,6 +77,15 @@ class maria:
             host = self.get_user(event[3])
             participants = self.get_partipants(event_id)
             return {"eventid": event_id, "name": event[0], "date": event[1], "description": event[2], "host": host, "participants": participants}
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
+    def get_user_events(self, user_id):
+        try:
+            query = "SELECT eventid FROM participants WHERE userid=%s;"
+            self.cursor.execute(query, (user_id,))
+            events = self.cursor.fetchall()
+            return [eventid[0] for eventid in events]
         except mariadb.Error as e:
             print(f"Error: {e}")
 
