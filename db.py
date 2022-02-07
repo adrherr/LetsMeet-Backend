@@ -118,5 +118,16 @@ class maria:
         except mariadb.Error as e:
             print(f"Error: {e}")
 
+    def login(self, creds):
+        try:
+            query = "SELECT userid FROM users WHERE email=%s AND password=%s HAVING COUNT(userid)=1;"
+            self.cursor.execute(query, (creds["email"], creds["password"]))
+            userid = self.cursor.fetchone()
+            if userid == None:
+                return -1
+            return userid[0]
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
     def close(self):
         self.conn.close()
