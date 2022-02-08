@@ -85,7 +85,7 @@ class maria:
             query = "SELECT eventid FROM participants WHERE userid=%s;"
             self.cursor.execute(query, (user_id,))
             events = self.cursor.fetchall()
-            return [eventid[0] for eventid in events]
+            return [self.get_event(eventid[0]) for eventid in events]
         except mariadb.Error as e:
             print(f"Error: {e}")
 
