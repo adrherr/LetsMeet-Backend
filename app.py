@@ -49,8 +49,7 @@ def parse_post_request():
         if post_type == 'user':
             info = request.json
             print(info)
-            sql.add_user(info)
-            return 'Success'
+            return sql.add_user(info)
 
         elif post_type == 'event':
             info = request.json

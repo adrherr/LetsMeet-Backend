@@ -91,10 +91,16 @@ class maria:
 
     def add_user(self, user):
         try:
+            query = "SELECT email FROM users WHERE email=%s;"
+            self.cursor.execute(query, (user["email"],))
+            email = self.cursor.fetchone()
+            if email != None:
+                return "-1"
             query = "INSERT INTO users (email,password,name) VALUES (%s,%s,%s);"
             self.cursor.execute(
                 query, (user["email"], user["password"], user["name"]))
             self.conn.commit()
+            return "Success"
         except mariadb.Error as e:
             print(f"Error: {e}")
 
