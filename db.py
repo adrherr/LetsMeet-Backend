@@ -126,14 +126,6 @@ class maria:
             self.conn.commit()
         except mariadb.Error as e:
             print(f"Error: {e}")
-    
-    def remove_user_event(self, info):
-        try:
-            query = "DELETE FROM participants WHERE eventid=%d AND userid=%d;"
-            self.cursor.execute(query, (info["eventid"], info["userid"]))
-            self.conn.commit()
-        except mariadb.Error as e:
-            print(f"Error: {e}")
 
     def login(self, creds):
         try:
@@ -143,6 +135,25 @@ class maria:
             if userid == None:
                 return -1
             return userid[0]
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+    
+    def remove_event(self, event_id):
+        try:
+            query = "DELETE FROM events WHERE eventid=%d;"
+            self.cursor.execute(query, (event_id,))
+            self.conn.commit()
+            query = "DELETE FROM participants WHERE eventid=%d;"
+            self.cursor.execute(query, (event_id,))
+            self.conn.commit()
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
+    def leave_event(self, event_id, user_id):
+        try:
+            query = "DELETE FROM participants WHERE eventid=%d AND userid=%d;"
+            self.cursor.execute(query, (event_id, user_id))
+            self.conn.commit()
         except mariadb.Error as e:
             print(f"Error: {e}")
 

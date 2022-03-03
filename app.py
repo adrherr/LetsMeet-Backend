@@ -57,16 +57,21 @@ def parse_post_request():
             print(info)
             sql.add_event(info)
         
-        elif post_type == 'removeevent':
-            info = request.json
-            print(info)
-            sql.remove_user_event(info)
-        
         elif post_type == 'login':
             info = request.json
             print(info)
             userid = sql.login(info)
             return str(userid)
+
+        elif post_type == 'removeevent':
+            info = request.json
+            print(info)
+            sql.remove_event(info['eventid'])
+
+        elif post_type == 'leaveevent':
+            info = request.json
+            print(info)
+            sql.leave_event(info['eventid'], info['userid'])
 
     return '😐 OOPS 😐'
 
