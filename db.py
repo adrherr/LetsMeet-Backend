@@ -114,12 +114,12 @@ class maria:
                 query, (event["name"], event["date"], event["description"], event["hostId"]))
             event_id = self.cursor.lastrowid
             for participant_id in event["participantIds"]:
-                self.add_participant(participant_id, event_id)
+                self.add_participant(event_id, participant_id)
             self.conn.commit()
         except mariadb.Error as e:
             print(f"Error: {e}")
 
-    def add_participant(self, user_id, event_id):
+    def add_participant(self, event_id, user_id):
         try:
             query = "INSERT INTO participants (eventid,userid) VALUES (%d,%d);"
             self.cursor.execute(query, (event_id, user_id))

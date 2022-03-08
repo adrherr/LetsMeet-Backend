@@ -56,6 +56,11 @@ def parse_post_request():
             info = request.json
             print(info)
             sql.add_event(info)
+
+        elif post_type == 'participant':
+            info = request.json
+            print(info)
+            sql.add_participant(info['eventid'], info['userid'])
         
         elif post_type == 'login':
             info = request.json
