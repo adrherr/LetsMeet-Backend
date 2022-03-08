@@ -140,10 +140,10 @@ class maria:
     
     def remove_event(self, event_id):
         try:
-            query = "DELETE FROM events WHERE eventid=%d;"
+            query = "DELETE FROM participants WHERE eventid=%d;"
             self.cursor.execute(query, (event_id,))
             self.conn.commit()
-            query = "DELETE FROM participants WHERE eventid=%d;"
+            query = "DELETE FROM events WHERE eventid=%d;"
             self.cursor.execute(query, (event_id,))
             self.conn.commit()
         except mariadb.Error as e:
