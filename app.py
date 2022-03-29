@@ -1,8 +1,10 @@
 from flask import Flask, render_template, redirect, request, session
+from flask_socketio import SocketIO
 from db import maria
 import json
 
 app = Flask(__name__, template_folder='website')
+socketio = SocketIO(app)
 sql = maria()
 
 
@@ -79,6 +81,12 @@ def parse_post_request():
             sql.leave_event(info['eventid'], info['userid'])
 
     return '😐 OOPS 😐'
+
+
+@socketio.on('message')
+def handle_my_custom_event(msg):
+    print('received my event: ' + msg)
+    socketio.send("Hello sir!!!!!!!!!!!!!!")
 
 
 if __name__ == "__main__":
