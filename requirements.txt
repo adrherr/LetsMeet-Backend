@@ -1,2 +1,4 @@
 Flask
 mariadb
+python-socketio
+Flask-SocketIO

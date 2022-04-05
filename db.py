@@ -89,6 +89,26 @@ class maria:
         except mariadb.Error as e:
             print(f"Error: {e}")
 
+    def get_conversations(self, user_id):
+        try:
+            query = "SELECT convoid FROM conversations WHERE userid=%s;"
+            self.cursor.execute(query, (user_id,))
+            return [convoid[0] for convoid in self.cursor.fetchall()]
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
+    def get_messages(self, user_id, convo_id):
+        try:
+            query = "SELECT pid, text, createdat, userid FROM messages WHERE convoid=%s;"
+            self.cursor.execute(query, (convo_id,))
+            messages = self.cursor.fetchall()
+            jsonMessages = []
+            for pid, text, createdat, userid in messages:
+                jsonMessages.append({"id": pid, "text":text, "createdAt": createdat, "user": userid})
+            return jsonMessages
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
     def add_user(self, user):
         try:
             query = "SELECT email FROM users WHERE email=%s;"

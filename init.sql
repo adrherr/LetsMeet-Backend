@@ -89,3 +89,61 @@ INSERT INTO `participants` VALUES   (1,2,3),
                                     (5,1,1),
                                     (6,1,5);
 UNLOCK TABLES;
+
+--
+-- Table structure for table `conversations`
+--
+
+DROP TABLE IF EXISTS `conversations`;
+
+CREATE TABLE `conversations` (
+    `convoid` int(10) NOT NULL,
+    `userid` int(10) NOT NULL,
+    FOREIGN KEY (`userid`) REFERENCES `users` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --
+-- -- Dumping data for table `conversations`
+-- --
+
+LOCK TABLES `conversations` WRITE;
+INSERT INTO `conversations` VALUES  (666,1),
+                                    (666,2),
+                                    (999,3),
+                                    (999,4),
+                                    (222,5),
+                                    (222,6),
+                                    (333,7),
+                                    (333,8);
+UNLOCK TABLES;
+
+--
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+
+CREATE TABLE `messages` (
+    `pid` int(10) NOT NULL,
+    `convoid` int(10) NOT NULL,
+    `text` varchar(2000) NOT NULL,
+    `createdat` varchar(40) NOT NULL,
+    `userid` int(10) NOT NULL,
+    PRIMARY KEY (`pid`),
+    FOREIGN KEY (`userid`) REFERENCES `users` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+LOCK TABLES `messages` WRITE;
+INSERT INTO `messages` VALUES   (1,666,"Hey what's up","2022-04-20T18:20:00.000Z",1),
+                                (2,666,"Not doing anything today wbu?","2022-04-20T18:27:00.000Z",2),
+                                (3,999,"Hi","2022-04-03T18:20:00.000Z",3),
+                                (4,999,"Hello!","2022-04-03T18:27:00.000Z",4),
+                                (5,222,"Are you hungry?","2022-04-08T18:20:00.000Z",5),
+                                (6,222,"Yes where do you want to go?","2022-04-08T18:27:00.000Z",6),
+                                (7,333,"Do you want to go shopping?","2022-03-10T18:20:00.000Z",7),
+                                (8,333,"Yes, I need more clothes!","2022-03-10T18:27:00.000Z",8);
+UNLOCK TABLES;
