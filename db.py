@@ -44,6 +44,14 @@ class maria:
         except mariadb.Error as e:
             print(f"Error: {e}")
 
+    def get_user_name(self, user_id):
+        try:
+            query = "SELECT name FROM users WHERE userid=%s;"
+            self.cursor.execute(query, (user_id,))
+            return self.cursor.fetchone()[0]
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
     def get_partipants(self, event_id):
         try:
             query = "SELECT userid FROM participants WHERE eventid=%s;"
@@ -93,18 +101,28 @@ class maria:
         try:
             query = "SELECT convoid FROM conversations WHERE userid=%s;"
             self.cursor.execute(query, (user_id,))
-            return [convoid[0] for convoid in self.cursor.fetchall()]
+            convos = [convoid[0] for convoid in self.cursor.fetchall()]
+            jsonConvos = []
+            for convo in convos:
+                query = "SELECT userid FROM conversations WHERE convoid=%s AND userid<>%s;"
+                self.cursor.execute(query, (convo, user_id))
+                userid = self.cursor.fetchone()[0]
+                name = self.get_user_name(userid)
+                jsonConvos.append({"convoid": convo, "user": name, "message": "wasssup"})
+            return jsonConvos
         except mariadb.Error as e:
             print(f"Error: {e}")
 
-    def get_messages(self, user_id, convo_id):
+    def get_messages(self, convo_id):
         try:
             query = "SELECT pid, text, createdat, userid FROM messages WHERE convoid=%s;"
             self.cursor.execute(query, (convo_id,))
             messages = self.cursor.fetchall()
             jsonMessages = []
             for pid, text, createdat, userid in messages:
-                jsonMessages.append({"id": pid, "text":text, "createdAt": createdat, "user": userid})
+                name = self.get_user_name(userid)
+                jsonMessages.append({"id": pid, "text":text, "createdAt": createdat, 
+                                    "user": {"id_": userid, "name": name, "avatar": 'https://placeimg.com/140/140/any'}})
             return jsonMessages
         except mariadb.Error as e:
             print(f"Error: {e}")
