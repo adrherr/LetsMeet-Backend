@@ -121,8 +121,8 @@ class maria:
             jsonMessages = []
             for pid, text, createdat, userid in messages:
                 name = self.get_user_name(userid)
-                jsonMessages.append({"id": pid, "text":text, "createdAt": createdat, 
-                                    "user": {"id_": userid, "name": name, "avatar": 'https://placeimg.com/140/140/any'}})
+                jsonMessages.append({"_id": pid, "text":text, "createdAt": createdat, 
+                                    "user": {"_id": userid, "name": name, "avatar": 'https://placeimg.com/140/140/any'}})
             return jsonMessages
         except mariadb.Error as e:
             print(f"Error: {e}")
