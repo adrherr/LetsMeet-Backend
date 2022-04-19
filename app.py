@@ -1,7 +1,7 @@
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 from db import maria
-import json
+import json, uuid
 
 app = Flask(__name__, template_folder='website')
 socketio = SocketIO(app)
@@ -91,12 +91,13 @@ def parse_post_request():
     return '😐 OOPS 😐'
 
 
-@socketio.on('message')
+@socketio.on('send')
 def handle_my_custom_event(msg):
-    print('received my event: ' + msg)
-    socketio.send("Hello sir!!!!!!!!!!!!!!")
-
+    print('RECEIVED:', msg)
+    socketio.emit(msg['toUid'] + msg['convoId'], msg)
+    sql.add_message(msg['convoId'], msg['message'][0]['text'], msg['message'][0]['createdAt'], msg['fromUid'])
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # app.run(debug=True, host='0.0.0.0', port=5000)
+    socketio.run(app, debug=True, host='0.0.0.0', port=5000)
     sql.close()

@@ -108,7 +108,7 @@ class maria:
                 self.cursor.execute(query, (convo, user_id))
                 userid = self.cursor.fetchone()[0]
                 name = self.get_user_name(userid)
-                jsonConvos.append({"convoid": convo, "user": name, "message": "wasssup"})
+                jsonConvos.append({"convoid": convo, "user": name, "userid": userid, "message": "wasssup"})
             return jsonConvos
         except mariadb.Error as e:
             print(f"Error: {e}")
@@ -117,7 +117,7 @@ class maria:
         try:
             query = "SELECT pid, text, createdat, userid FROM messages WHERE convoid=%s;"
             self.cursor.execute(query, (convo_id,))
-            messages = self.cursor.fetchall()
+            messages = reversed(self.cursor.fetchall())
             jsonMessages = []
             for pid, text, createdat, userid in messages:
                 name = self.get_user_name(userid)
@@ -165,6 +165,14 @@ class maria:
         except mariadb.Error as e:
             print(f"Error: {e}")
 
+    def add_message(self, convo_id, text, created_at, user_id):
+        try:
+            query = "INSERT INTO messages (convoid,text,createdat,userid) VALUES (%s,%s,%s,%s);"
+            self.cursor.execute(query, (convo_id, text, created_at, user_id))
+            self.conn.commit()
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
     def login(self, creds):
         try:
             query = "SELECT userid FROM users WHERE email=%s AND password=%s HAVING COUNT(userid)=1;"
@@ -194,6 +202,9 @@ class maria:
             self.conn.commit()
         except mariadb.Error as e:
             print(f"Error: {e}")
+    
+    def save_message(self, user_id):
+        pass
 
     def close(self):
         self.conn.close()

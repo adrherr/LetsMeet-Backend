@@ -126,7 +126,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `messages`;
 
 CREATE TABLE `messages` (
-    `pid` int(10) NOT NULL,
+    `pid` int(10) NOT NULL AUTO_INCREMENT,
     `convoid` int(10) NOT NULL,
     `text` varchar(2000) NOT NULL,
     `createdat` varchar(40) NOT NULL,
