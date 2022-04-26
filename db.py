@@ -97,6 +97,14 @@ class maria:
         except mariadb.Error as e:
             print(f"Error: {e}")
 
+    def get_recent_message(self, convo_id):
+        try:
+            query = "SELECT text FROM messages WHERE pid IN (SELECT MAX(pid) FROM messages where convoid=%s);"
+            self.cursor.execute(query, (convo_id,))
+            return self.cursor.fetchone()[0]
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
     def get_conversations(self, user_id):
         try:
             query = "SELECT convoid FROM conversations WHERE userid=%s;"
@@ -108,7 +116,8 @@ class maria:
                 self.cursor.execute(query, (convo, user_id))
                 userid = self.cursor.fetchone()[0]
                 name = self.get_user_name(userid)
-                jsonConvos.append({"convoid": convo, "user": name, "userid": userid, "message": "wasssup"})
+                message = self.get_recent_message(convo)
+                jsonConvos.append({"convoid": convo, "user": name, "userid": userid, "message": message})
             return jsonConvos
         except mariadb.Error as e:
             print(f"Error: {e}")
