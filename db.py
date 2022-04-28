@@ -2,6 +2,8 @@ import mariadb
 import json
 import sys
 
+from pyrsistent import plist
+
 
 class maria:
     def __init__(self):
@@ -133,6 +135,15 @@ class maria:
                 jsonMessages.append({"_id": pid, "text":text, "createdAt": createdat, 
                                     "user": {"_id": userid, "name": name, "avatar": 'https://placeimg.com/140/140/any'}})
             return jsonMessages
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+    
+    def get_profile(self, user_id):
+        try:
+            query = "SELECT name,bio FROM users WHERE userid=%d;"
+            self.cursor.execute(query, (user_id,))
+            userData = self.cursor.fetchone()
+            return {"name": userData[0], "bio": userData[1]}
         except mariadb.Error as e:
             print(f"Error: {e}")
 

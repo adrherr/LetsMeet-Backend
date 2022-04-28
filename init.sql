@@ -16,9 +16,10 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
     `userid` int(10) NOT NULL AUTO_INCREMENT,
-    `email` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
-    `password` varchar(45) CHARACTER SET utf8mb4 NOT NULL,
-    `name` varchar(45) CHARACTER SET utf8mb4 NOT NULL,
+    `email` varchar(200) CHARACTER SET utf8mb4 NOT NULL,
+    `password` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+    `name` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+    `bio` varchar(2000) CHARACTER SET utf8mb4,
     PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -27,14 +28,14 @@ CREATE TABLE `users` (
 --
 
 LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES  (1,'bob@g.com','1234','Bob'),
-                            (2,'tom@g.com','1234','Tom'),
-                            (3,'sally@g.com','1234','Sally'),
-                            (4,'jack@g.com','1234','Jack'),
-                            (5,'jerry@g.com','1234','Jerry'),
-                            (6,'elon@g.com','1234','Elon'),
-                            (7,'bill@g.com','1234','Bill'),
-                            (8,'niki@g.com','1234','Niki');
+INSERT INTO `users` VALUES  (1,'bob@g.com','1234','Bob','Hi I like dogs'),
+                            (2,'tom@g.com','1234','Tom',NULL),
+                            (3,'sally@g.com','1234','Sally','Hello, I am a student in college and I am studying math'),
+                            (4,'jack@g.com','1234','Jack','I really enjoy fishing at the beach'),
+                            (5,'jerry@g.com','1234','Jerry',NULL),
+                            (6,'elon@g.com','1234','Elon','I am going to buy out twitter 😏'),
+                            (7,'bill@g.com','1234','Bill',NULL),
+                            (8,'niki@g.com','1234','Niki','You usually will find me at the beach getting a tan');
 UNLOCK TABLES;
 
 --
@@ -45,9 +46,9 @@ DROP TABLE IF EXISTS `events`;
 
 CREATE TABLE `events` (
     `eventid` int(10) NOT NULL AUTO_INCREMENT,
-    `title` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+    `title` varchar(200) CHARACTER SET utf8mb4 NOT NULL,
     `edate` date NOT NULL,
-    `description` varchar(300) CHARACTER SET utf8mb4 NOT NULL,
+    `description` varchar(2000) CHARACTER SET utf8mb4 NOT NULL,
     `hostid` int(10) NOT NULL,
     PRIMARY KEY (`eventid`),
     FOREIGN KEY (`hostid`) REFERENCES `users` (`userid`)

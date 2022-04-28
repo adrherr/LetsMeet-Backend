@@ -40,6 +40,10 @@ def parse_get_request():
             info = sql.get_messages(user)
             return json.dumps({"messages": info})
 
+        elif event == "profile" and user:
+            info = sql.get_profile(user)
+            return json.dumps(info)
+
         elif user:
             user = sql.get_user(user)
             return json.dumps(user)
