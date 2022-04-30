@@ -17,39 +17,39 @@ def index():
 @app.route('/get', methods=['GET'])
 def parse_get_request():
     if (request.method == 'GET'):
-        user = request.args.get("user")
-        event = request.args.get("event")
+        value = request.args.get("value")
+        get_type = request.args.get("type")
 
-        if user == "all":
+        if get_type == "user" and value == "all":
             users = sql.get_all_users()
             return json.dumps({"users": users})
 
-        elif event == "all":
+        elif get_type == "event" and value == "all":
             info = sql.get_all_events()
             return json.dumps({"events": info})
 
-        elif event == "userevents" and user:
-            info = sql.get_user_events(user)
+        elif get_type == "userevents" and value:
+            info = sql.get_user_events(value)
             return json.dumps({"events": info})
 
-        elif event == "conversations" and user:
-            info = sql.get_conversations(user)
+        elif get_type == "conversations" and value:
+            info = sql.get_conversations(value)
             return json.dumps({"messages": info})
 
-        elif event == "messages" and user:
-            info = sql.get_messages(user)
+        elif get_type == "messages" and value:
+            info = sql.get_messages(value)
             return json.dumps({"messages": info})
 
-        elif event == "profile" and user:
-            info = sql.get_profile(user)
+        elif get_type == "profile" and value:
+            info = sql.get_profile(value)
             return json.dumps(info)
 
-        elif user:
-            user = sql.get_user(user)
+        elif get_type == "user" and value:
+            user = sql.get_user(value)
             return json.dumps(user)
 
-        elif event:
-            info = sql.get_event(event)
+        elif get_type == "event" and value:
+            info = sql.get_event(value)
             return json.dumps(info)
 
     return '😐 OOPS 😐'
