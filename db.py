@@ -196,6 +196,14 @@ class maria:
         except mariadb.Error as e:
             print(f"Error: {e}")
 
+    def save_profile(self, user_id, name, bio, tags):
+        try:
+            query = "UPDATE users SET name=%s, bio=%s WHERE userid=%d;"
+            self.cursor.execute(query, (name, bio, user_id))
+            self.conn.commit()
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
     def login(self, creds):
         try:
             query = "SELECT userid FROM users WHERE email=%s AND password=%s HAVING COUNT(userid)=1;"

@@ -92,6 +92,11 @@ def parse_post_request():
             print(info)
             sql.leave_event(info['eventid'], info['userid'])
 
+        elif post_type == 'profile':
+            info = request.json
+            print(info)
+            sql.save_profile(info['userid'], info['name'], info['bio'], info['tags'])
+
     return '😐 OOPS 😐'
 
 
