@@ -143,7 +143,10 @@ class maria:
             query = "SELECT name,bio FROM users WHERE userid=%d;"
             self.cursor.execute(query, (user_id,))
             userData = self.cursor.fetchone()
-            return {"name": userData[0], "bio": userData[1]}
+            query = "SELECT tag FROM tags WHERE userid=%d;"
+            self.cursor.execute(query, (user_id,))
+            tags = [tag[0] for tag in self.cursor.fetchall()]
+            return {"name": userData[0], "bio": userData[1], "tags": tags}
         except mariadb.Error as e:
             print(f"Error: {e}")
 
@@ -222,9 +225,6 @@ class maria:
             self.conn.commit()
         except mariadb.Error as e:
             print(f"Error: {e}")
-    
-    def save_message(self, user_id):
-        pass
 
     def close(self):
         self.conn.close()
