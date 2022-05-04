@@ -45,10 +45,9 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `tags`;
 
 CREATE TABLE `tags` (
-    `pid` int(10) NOT NULL AUTO_INCREMENT,
     `userid` int(10) NOT NULL,
     `tag` varchar(30) NOT NULL,
-    PRIMARY KEY (`pid`),
+    PRIMARY KEY (`userid`, `tag`),
     FOREIGN KEY (`userid`) REFERENCES `users` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -57,33 +56,33 @@ CREATE TABLE `tags` (
 --
 
 LOCK TABLES `tags` WRITE;
-INSERT INTO `tags` VALUES   (1,1,"Movies"),
-                            (2,1,"Animals"),
-                            (3,1,"Horses"),
-                            (4,1,"Dogs"),
-                            (5,1,"Anti-Cats"),
-                            (6,2,"Books"),
-                            (7,2,"Technology"),
-                            (8,2,"Politics"),
-                            (9,2,"Debates"),
-                            (10,4,"Fishing"),
-                            (11,4,"Beach"),
-                            (12,4,"Basketball"),
-                            (13,4,"Hiking"),
-                            (14,6,"Space"),
-                            (15,6,"Mars"),
-                            (16,6,"Twitter"),
-                            (17,6,"SpaceX"),
-                            (18,6,"Tesla"),
-                            (19,6,"Cars"),
-                            (20,6,"Batteries"),
-                            (21,6,"Memes"),
-                            (22,6,"Entrepreneurship"),
-                            (23,8,"Beach"),
-                            (24,8,"Tanning"),
-                            (25,8,"Malibu"),
-                            (26,8,"Parties"),
-                            (27,8,"Raves");
+INSERT INTO `tags` VALUES   (1,"Movies"),
+                            (1,"Animals"),
+                            (1,"Horses"),
+                            (1,"Dogs"),
+                            (1,"Books"),
+                            (2,"Books"),
+                            (2,"Technology"),
+                            (2,"Politics"),
+                            (2,"Debates"),
+                            (4,"Fishing"),
+                            (4,"Beach"),
+                            (4,"Basketball"),
+                            (4,"Hiking"),
+                            (6,"Space"),
+                            (6,"Mars"),
+                            (6,"Twitter"),
+                            (6,"SpaceX"),
+                            (6,"Tesla"),
+                            (6,"Cars"),
+                            (6,"Batteries"),
+                            (6,"Memes"),
+                            (6,"Entrepreneurship"),
+                            (8,"Beach"),
+                            (8,"Tanning"),
+                            (8,"Malibu"),
+                            (8,"Parties"),
+                            (8,"Raves");
 UNLOCK TABLES;
 
 --

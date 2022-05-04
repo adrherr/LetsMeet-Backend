@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 from db import maria
-import json, uuid
+import json
 
 app = Flask(__name__, template_folder='website')
 socketio = SocketIO(app)

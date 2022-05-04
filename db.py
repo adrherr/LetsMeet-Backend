@@ -2,9 +2,6 @@ import mariadb
 import json
 import sys
 
-from pyrsistent import plist
-
-
 class maria:
     def __init__(self):
         # Connect to MariaDB
@@ -200,7 +197,12 @@ class maria:
         try:
             query = "UPDATE users SET name=%s, bio=%s WHERE userid=%d;"
             self.cursor.execute(query, (name, bio, user_id))
-            self.conn.commit()
+            query = "DELETE FROM tags WHERE userid=%d;"
+            self.cursor.execute(query, (user_id,))
+            for tag in tags:
+                query = "INSERT IGNORE INTO tags VALUES(%d,%s);"
+                self.cursor.execute(query, (user_id, tag))
+                self.conn.commit()
         except mariadb.Error as e:
             print(f"Error: {e}")
 
