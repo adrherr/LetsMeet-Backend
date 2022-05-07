@@ -97,6 +97,12 @@ def parse_post_request():
             print(info)
             sql.save_profile(info['userid'], info['name'], info['bio'], info['tags'])
 
+        elif post_type == 'conversation':
+            info = request.json
+            print(info)
+            convoid = sql.get_convo(info['userid'], info['other_userid'])
+            return json.dumps({"convoid": convoid})
+
     return '😐 OOPS 😐'
 
 
@@ -104,7 +110,8 @@ def parse_post_request():
 def handle_my_custom_event(msg):
     print('RECEIVED:', msg)
     socketio.emit(msg['toUid'] + msg['convoId'], msg)
-    sql.add_message(msg['convoId'], msg['message'][0]['text'], msg['message'][0]['createdAt'], msg['fromUid'])
+    sql.add_message(msg['convoId'], msg['message'][0]['text'],
+                    msg['message'][0]['createdAt'], msg['fromUid'])
 
 if __name__ == "__main__":
     # app.run(debug=True, host='0.0.0.0', port=5000)

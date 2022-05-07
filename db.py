@@ -1,3 +1,4 @@
+from random import randint
 import mariadb
 import json
 import sys
@@ -100,7 +101,11 @@ class maria:
         try:
             query = "SELECT text FROM messages WHERE pid IN (SELECT MAX(pid) FROM messages where convoid=%s);"
             self.cursor.execute(query, (convo_id,))
-            return self.cursor.fetchone()[0]
+            message = self.cursor.fetchone()
+            if message == None:
+                return None
+            else:
+                return message[0]
         except mariadb.Error as e:
             print(f"Error: {e}")
 
@@ -111,13 +116,30 @@ class maria:
             convos = [convoid[0] for convoid in self.cursor.fetchall()]
             jsonConvos = []
             for convo in convos:
+                message = self.get_recent_message(convo)
+                if message == None: continue
                 query = "SELECT userid FROM conversations WHERE convoid=%s AND userid<>%s;"
                 self.cursor.execute(query, (convo, user_id))
                 userid = self.cursor.fetchone()[0]
                 name = self.get_user_name(userid)
-                message = self.get_recent_message(convo)
                 jsonConvos.append({"convoid": convo, "user": name, "userid": userid, "message": message})
             return jsonConvos
+        except mariadb.Error as e:
+            print(f"Error: {e}")
+
+    def get_convo(self, user_id, other_user_id):
+        try:
+            query = "SELECT A.convoid FROM conversations A, conversations B WHERE A.userid=%d AND B.userid=%d AND A.convoid=B.convoid;"
+            self.cursor.execute(query, (user_id, other_user_id))
+            convoid = self.cursor.fetchone()
+            if convoid == None:
+                convo_id = randint(1,1000000000)
+                query = "INSERT INTO conversations VALUES (%d,%d), (%d,%d);"
+                self.cursor.execute(query, (convo_id, user_id, convo_id, other_user_id))
+                self.conn.commit()
+                return convoid
+            else:
+                return convoid[0]
         except mariadb.Error as e:
             print(f"Error: {e}")
 
