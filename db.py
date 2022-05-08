@@ -64,15 +64,15 @@ class maria:
 
     def get_all_events(self):
         try:
-            query = "SELECT eventid, title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, hostid FROM events;"
+            query = "SELECT eventid, title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, location, hostid FROM events;"
             self.cursor.execute(query)
             events = self.cursor.fetchall()
             jsonEvents = []
-            for eventid, title, edate, description, hostid in events:
+            for eventid, title, edate, description, location, hostid in events:
                 host = self.get_user(hostid)
                 participants = self.get_partipants(eventid)
-                jsonEvents.append({"eventid": eventid, "name": title, "date": edate,
-                                  "description": description, "host": host, "participants": participants})
+                jsonEvents.append({"eventid": eventid, "name": title, "date": edate, "description": description,
+                                    "location": location, "host": host, "participants": participants})
             return jsonEvents
         except mariadb.Error as e:
             print(f"Error: {e}")

@@ -108,7 +108,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 INSERT INTO `events` VALUES (1,'Music Concert','2020-03-17','Come join us for another big concert','The Greek Theatre',7),
-                            (2,'Camping','2020-06-22','Have fun at our annual comping trip!','Castaic Lake',8);
+                            (2,'Camping','2020-06-22','Have fun at our annual camping trip!','Castaic Lake',8);
 UNLOCK TABLES;
 
 --
