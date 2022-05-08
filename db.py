@@ -132,15 +132,15 @@ class maria:
         try:
             query = "SELECT A.convoid FROM conversations A, conversations B WHERE A.userid=%d AND B.userid=%d AND A.convoid=B.convoid;"
             self.cursor.execute(query, (user_id, other_user_id))
-            convoid = self.cursor.fetchone()
-            if convoid == None:
+            convo_id = self.cursor.fetchone()
+            if convo_id == None:
                 convo_id = randint(1,1000000000)
                 query = "INSERT INTO conversations VALUES (%d,%d), (%d,%d);"
                 self.cursor.execute(query, (convo_id, user_id, convo_id, other_user_id))
                 self.conn.commit()
-                return convoid
+                return convo_id
             else:
-                return convoid[0]
+                return convo_id[0]
         except mariadb.Error as e:
             print(f"Error: {e}")
 
