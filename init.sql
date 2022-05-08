@@ -93,9 +93,10 @@ DROP TABLE IF EXISTS `events`;
 
 CREATE TABLE `events` (
     `eventid` int(10) NOT NULL AUTO_INCREMENT,
-    `title` varchar(200) CHARACTER SET utf8mb4 NOT NULL,
+    `title` varchar(500) CHARACTER SET utf8mb4 NOT NULL,
     `edate` date NOT NULL,
     `description` varchar(2000) CHARACTER SET utf8mb4 NOT NULL,
+    `location` varchar(500) CHARACTER SET utf8mb4 NOT NULL,
     `hostid` int(10) NOT NULL,
     PRIMARY KEY (`eventid`),
     FOREIGN KEY (`hostid`) REFERENCES `users` (`userid`)
@@ -106,8 +107,8 @@ CREATE TABLE `events` (
 --
 
 LOCK TABLES `events` WRITE;
-INSERT INTO `events` VALUES (1,'Music Concert','2020-03-17','Come join us for another big concert',7),
-                            (2,'Camping','2020-06-22','Have fun at our annual comping trip!',8);
+INSERT INTO `events` VALUES (1,'Music Concert','2020-03-17','Come join us for another big concert','The Greek Theatre',7),
+                            (2,'Camping','2020-06-22','Have fun at our annual comping trip!','Castaic Lake',8);
 UNLOCK TABLES;
 
 --

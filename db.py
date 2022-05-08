@@ -79,12 +79,13 @@ class maria:
 
     def get_event(self, event_id):
         try:
-            query = "SELECT title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, hostid FROM events WHERE eventid=%s;"
+            query = "SELECT title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, location, hostid FROM events WHERE eventid=%s;"
             self.cursor.execute(query, (event_id,))
             event = self.cursor.fetchone()
-            host = self.get_user(event[3])
+            host = self.get_user(event[4])
             participants = self.get_partipants(event_id)
-            return {"eventid": event_id, "name": event[0], "date": event[1], "description": event[2], "host": host, "participants": participants}
+            return {"eventid": event_id, "name": event[0], "date": event[1], "description": event[2], 
+                    "location": event[3], "host": host, "participants": participants}
         except mariadb.Error as e:
             print(f"Error: {e}")
 
@@ -189,9 +190,9 @@ class maria:
 
     def add_event(self, event):
         try:
-            query = "INSERT INTO events (title,edate,description,hostid) VALUES (%s,%s,%s,%d);"
-            self.cursor.execute(
-                query, (event["name"], event["date"], event["description"], event["hostId"]))
+            query = "INSERT INTO events (title,edate,description,location,hostid) VALUES (%s,%s,%s,%s,%d);"
+            values = (event["name"], event["date"], event["description"], event["location"], event["hostId"])
+            self.cursor.execute(query, values)
             event_id = self.cursor.lastrowid
             for participant_id in event["participantIds"]:
                 self.add_participant(event_id, participant_id)
