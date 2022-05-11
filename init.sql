@@ -107,8 +107,13 @@ CREATE TABLE `events` (
 --
 
 LOCK TABLES `events` WRITE;
-INSERT INTO `events` VALUES (1,'Music Concert','2020-03-17','Come join us for another big concert','The Greek Theatre',7),
-                            (2,'Camping','2020-06-22','Have fun at our annual camping trip!','Castaic Lake',8);
+INSERT INTO `events` VALUES (1,'Music Concert','2022-05-17','Come join us for another big concert','The Greek Theatre',8),
+                            (2,'Camping','2022-05-20','Have fun at our annual camping trip!','Castaic Lake',7),
+                            (3,'Movies','2022-05-24','Join everyone to go see the The Batman!','AMC Porter Ranch',7),
+                            (4,'Hiking','2022-06-01','Hiking through beautiful Malibu trails','Malibu',6),
+                            (5,'Natural History Museum','2022-06-07','If you like dinosaurs come join!','900 W Exposition Blvd',5),
+                            (6,'Golfing','2022-06-10','Grab your shiniest golf clubs for this years annual golfing meet','Porter Ranch Country Club',4),
+                            (7,'Yoga Classes','2022-06-13','If you are new to yoga this is the perfect opportunity to learn more!','Santa Monica Beach',3);
 UNLOCK TABLES;
 
 --
@@ -131,14 +136,27 @@ CREATE TABLE `participants` (
 --
 
 LOCK TABLES `participants` WRITE;
-INSERT INTO `participants` VALUES   (1,2,3),
-                                    (2,2,4),
-                                    (3,2,2),
-                                    (4,2,5),
-                                    (5,2,8),
-                                    (6,1,1),
-                                    (7,1,7),
-                                    (8,1,5);
+INSERT INTO `participants` VALUES   (1,1,8),
+                                    (2,1,2),
+                                    (3,1,3),
+                                    (4,1,4),
+                                    (5,1,1),
+                                    (6,2,7),
+                                    (7,2,6),
+                                    (8,3,7),
+                                    (9,3,4),
+                                    (10,3,3),
+                                    (11,4,6),
+                                    (12,4,5),
+                                    (13,4,7),
+                                    (14,5,5),
+                                    (15,5,4),
+                                    (16,6,4),
+                                    (17,6,2),
+                                    (18,6,1),
+                                    (19,7,3),
+                                    (20,7,1),
+                                    (21,7,5);
 UNLOCK TABLES;
 
 --
@@ -194,7 +212,7 @@ LOCK TABLES `messages` WRITE;
 INSERT INTO `messages` VALUES   (1,666,"Hey what's up","2022-04-20T18:20:00.000Z",1),
                                 (2,666,"Not doing anything today wbu?","2022-04-20T18:27:00.000Z",2),
                                 (3,777,"Hey","2022-04-20T18:22:00.000Z",1),
-                                (4,777,"Sorry don't talk to me","2022-04-20T18:24:00.000Z",8),
+                                (4,777,"Hey we should totally hang out","2022-04-20T18:24:00.000Z",8),
                                 (5,999,"Hi","2022-04-03T18:20:00.000Z",3),
                                 (6,999,"Hello!","2022-04-03T18:27:00.000Z",4),
                                 (7,222,"Are you hungry?","2022-04-08T18:20:00.000Z",5),
