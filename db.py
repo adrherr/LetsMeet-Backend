@@ -168,10 +168,13 @@ class maria:
             query = "SELECT name,bio FROM users WHERE userid=%d;"
             self.cursor.execute(query, (user_id,))
             userData = self.cursor.fetchone()
+            bio = userData[1]
+            if bio == None:
+                bio = ""
             query = "SELECT tag FROM tags WHERE userid=%d;"
             self.cursor.execute(query, (user_id,))
             tags = [tag[0] for tag in self.cursor.fetchall()]
-            return {"name": userData[0], "bio": userData[1], "tags": tags}
+            return {"name": userData[0], "bio": bio, "tags": tags}
         except mariadb.Error as e:
             print(f"Error: {e}")
 
