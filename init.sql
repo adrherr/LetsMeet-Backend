@@ -97,6 +97,7 @@ CREATE TABLE `events` (
     `edate` date NOT NULL,
     `description` varchar(2000) CHARACTER SET utf8mb4 NOT NULL,
     `location` varchar(500) CHARACTER SET utf8mb4 NOT NULL,
+    `image` varchar(1000) CHARACTER SET utf8mb4,
     `hostid` int(10) NOT NULL,
     PRIMARY KEY (`eventid`),
     FOREIGN KEY (`hostid`) REFERENCES `users` (`userid`)
@@ -107,13 +108,13 @@ CREATE TABLE `events` (
 --
 
 LOCK TABLES `events` WRITE;
-INSERT INTO `events` VALUES (1,'Music Concert','2022-05-17','Come join us for another big concert','The Greek Theatre',8),
-                            (2,'Camping','2022-05-20','Have fun at our annual camping trip!','Castaic Lake',7),
-                            (3,'Movies','2022-05-24','Join everyone to go see the The Batman!','AMC Porter Ranch',7),
-                            (4,'Hiking','2022-06-01','Hiking through beautiful Malibu trails','Malibu',6),
-                            (5,'Natural History Museum','2022-06-07','If you like dinosaurs come join!','900 W Exposition Blvd',5),
-                            (6,'Golfing','2022-06-10','Grab your shiniest golf clubs for this years annual golfing meet','Porter Ranch Country Club',4),
-                            (7,'Yoga Classes','2022-06-13','If you are new to yoga this is the perfect opportunity to learn more!','Santa Monica Beach',3);
+INSERT INTO `events` VALUES (1,'Music Concert','2022-05-17','Come join us for another big concert','The Greek Theatre','https://www.digitalmusicnews.com/wp-content/uploads/2018/03/audience_concert.jpg',8),
+                            (2,'Camping','2022-05-20','Have fun at our annual camping trip!','Castaic Lake','https://vegoutmag.com/wp-content/uploads/2021/08/camping.jpg',7),
+                            (3,'Movies','2022-05-24','Join everyone to go see the The Batman!','AMC Porter Ranch','https://studybreaks.com/wp-content/uploads/2017/06/41-majesticbrookfield-exteriorjpg.jpg',7),
+                            (4,'Hiking','2022-06-01','Hiking through beautiful Malibu trails','Malibu','https://images.theconversation.com/files/405661/original/file-20210610-18-imwshy.jpg?ixlib=rb-1.1.0&rect=6%2C0%2C4486%2C2997&q=45&auto=format&w=926&fit=clip',6),
+                            (5,'Natural History Museum','2022-06-07','If you like dinosaurs come join!','900 W Exposition Blvd','https://www.ioes.ucla.edu/wp-content/uploads/nhmla_pic.jpg',5),
+                            (6,'Golfing','2022-06-10','Grab your shiniest golf clubs for this years annual golfing meet','Porter Ranch Country Club','https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Golfer_swing.jpg/800px-Golfer_swing.jpg',4),
+                            (7,'Yoga Classes','2022-06-13','If you are new to yoga this is the perfect opportunity to learn more!','Santa Monica Beach','https://images.everydayhealth.com/images/healthy-living/fitness/yoga-poses-for-beginners-07-722x406.jpg?w=720',3);
 UNLOCK TABLES;
 
 --

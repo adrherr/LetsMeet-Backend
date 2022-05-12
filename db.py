@@ -64,28 +64,33 @@ class maria:
 
     def get_all_events(self):
         try:
-            query = "SELECT eventid, title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, location, hostid FROM events;"
+            query = "SELECT eventid, title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, location, image, hostid FROM events;"
             self.cursor.execute(query)
             events = self.cursor.fetchall()
             jsonEvents = []
-            for eventid, title, edate, description, location, hostid in events:
+            for eventid, title, edate, description, location, image, hostid in events:
                 host = self.get_user(hostid)
                 participants = self.get_partipants(eventid)
+                if image == None:
+                    image = 'https://freesvg.org/img/1542492148.png'
                 jsonEvents.append({"eventid": eventid, "name": title, "date": edate, "description": description,
-                                    "location": location, "host": host, "participants": participants})
+                                    "location": location, "image": image, "host": host, "participants": participants})
             return jsonEvents
         except mariadb.Error as e:
             print(f"Error: {e}")
 
     def get_event(self, event_id):
         try:
-            query = "SELECT title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, location, hostid FROM events WHERE eventid=%s;"
+            query = "SELECT title, DATE_FORMAT(edate,'%M %d, %Y') AS formatted_date, description, location, image, hostid FROM events WHERE eventid=%s;"
             self.cursor.execute(query, (event_id,))
             event = self.cursor.fetchone()
-            host = self.get_user(event[4])
+            host = self.get_user(event[5])
+            image = event[4]
+            if image == None:
+                image = 'https://freesvg.org/img/1542492148.png'
             participants = self.get_partipants(event_id)
-            return {"eventid": event_id, "name": event[0], "date": event[1], "description": event[2], 
-                    "location": event[3], "host": host, "participants": participants}
+            return {"eventid": event_id, "name": event[0], "date": event[1], "description": event[2],
+                    "location": event[3], "image": image, "host": host, "participants": participants}
         except mariadb.Error as e:
             print(f"Error: {e}")
 
